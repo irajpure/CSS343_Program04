@@ -4,4 +4,6 @@
 *.out
 *.exe
 
+*.dSYM/
+
 .DS_Store
