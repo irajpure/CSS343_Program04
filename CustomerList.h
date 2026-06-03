@@ -6,8 +6,7 @@
 // Purpose: Header file for Customer List class - specialized linked list that stores 
 // a customer's information and transaction history.
 // -------------------------------------------------------------------------------
-// Notes: 
-//        transaction history is saved from most recent to oldest.
+// Notes: transaction history is saved from most recent to oldest.
 // -------------------------------------------------------------------------------
 
 #ifndef CUSTOMERLIST_H
@@ -28,6 +27,7 @@ enum class State {
 struct TransEntry {
 
     TransEntry();       //default node constructor
+    //other constructor: providing data for transaction
     TransEntry(string transType, string movieType, string director, string title, int year, TransEntry* nextEntry);
 
     string transType;           //character for type of transaction
@@ -43,25 +43,25 @@ struct TransEntry {
 class CustomerList {
     
     public:
-        CustomerList();                                                                      //default constructor
-        CustomerList(int customerID, string firstName, string lastName);         //constructor
-        ~CustomerList();                                                                     //destructor
-        void addTransEntry(string transType, string movieType, string director, string title, int year);
-        bool BorrowedMovie(string movieType, string director, string title, int year);
-        void print();
-        int getCustomerID();
-        string getFirstName();
-        string getLastName();
-        State getState();
-        void changeState(State newState);
-        CustomerList& operator=(const CustomerList& other);
+        CustomerList();                                                                     //default constructor
+        CustomerList(int customerID, string firstName, string lastName);                    //constructor
+        ~CustomerList();                                                                    //destructor
+        void addTransEntry(string transType, string movieType, string director, string title, int year);    //add a transaction to history
+        bool BorrowedMovie(string movieType, string director, string title, int year);      //check if customer has borrowed a movie
+        void print();                                                                       //print customer information
+        int getCustomerID();                                                                //return ID
+        string getFirstName();                                                              //return first name
+        string getLastName();                                                               //return last name
+        State getState();                                                                   //return state of slot (occupied, empty, or deleted)
+        void changeState(State newState);                                                   //modify state of slot
+        CustomerList& operator=(const CustomerList& other);                                 //= operator, for setting a customer.
     
     private:
-        int customerID;         //key
-        State slot;             //state of the slot
-        string firstName;       //customer's first name
-        string lastName;        //customer's first name
-        TransEntry* mostRecentEntry;  //pointer to customer's history.
+        int customerID;                 //key
+        State slot;                     //state of the slot
+        string firstName;               //customer's first name
+        string lastName;                //customer's first name
+        TransEntry* mostRecentEntry;    //pointer to customer's history.
 
 };
 

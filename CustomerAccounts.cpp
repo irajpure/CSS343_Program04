@@ -27,7 +27,7 @@
 #include "CustomerAccounts.h"
 #include "CustomerList.h"
 
-// ----------------------------- CustomerAccounts() -----------------------------------------
+// ----------------------------- CustomerAccounts() ------------------------------
 // Description: Default constructor. Initializes all data members to defaults.
 // Preconditions: None.
 // Postconditions: arraySize = possibleArraySizes[0], arraySizeIndex = 0, hashTable = new CustomerList[arraySize],
@@ -40,7 +40,7 @@ CustomerAccounts::CustomerAccounts() {
     customerCount = 0;
 }
 
-// ----------------------------- ~CustomerAccounts() ----------------------------------------
+// ----------------------------- ~CustomerAccounts() -----------------------------
 // Description: Destructor. Array is deleted. Destructor for objects inside will be implicitly called
 // Preconditions: None.
 // Postconditions: CustomerAccounts (hashtable) object destroyed.
@@ -49,7 +49,12 @@ CustomerAccounts::~CustomerAccounts() {
     delete[] hashTable;
 }
 
-
+// ----------------------------- addAccount() ---------------------------------
+// Description: Adds customer account to hash table, if valid entry.
+// Preconditions: customerID, first name, last name.
+// Postconditions: customer is added to hash table and appropriate variables are
+//                 updated.
+// ----------------------------------------------------------------------------
 int CustomerAccounts::addAccount(int customerID, string firstName, string lastName) {
     
     try {
@@ -76,7 +81,12 @@ int CustomerAccounts::addAccount(int customerID, string firstName, string lastNa
     }
 }
 
-//HELPER - GROW ARRAY --> need to implement
+// ----------------------------- growArray() ---------------------------------
+// Description: Increases hash table size and rehashes values.
+// Preconditions: none.
+// Postconditions: chooses next possible array size (from list of possible array
+//                 sizes), creates new array, and uses insert method to insert customers.
+// ---------------------------------------------------------------------------
 int CustomerAccounts::growArray() {
 
 
@@ -106,6 +116,11 @@ int CustomerAccounts::growArray() {
 
 }
 
+// ----------------------------- insert() ------------------------------------
+// Description: creates a customer account (customer list) and inserts in hash table
+// Preconditions: customer ID, first name, last name.
+// Postconditions: state of the used slot is now occupied.
+// ---------------------------------------------------------------------------
 int CustomerAccounts::insert(int customerID, string firstName, string lastName) {
 
     
@@ -113,7 +128,7 @@ int CustomerAccounts::insert(int customerID, string firstName, string lastName) 
     int collisions = 0;                 //keep track of how many collisions are happening
 
 
-    //while the element has not been inserted...
+    //while the element has not been inserted... (will not be infinity loop because size of array is always prime)
     while (inserted == false) {
         
         int hashKey = findInsertionPoint(customerID, collisions);       //find hash key depending on number of collisions
@@ -146,30 +161,42 @@ int CustomerAccounts::insert(int customerID, string firstName, string lastName) 
     return 0;
 }
 
+// ----------------------------- findInsertionPoint() ------------------------
+// Description: finds hash key for customer ID, depending on number of collisions and
+//              returns the index for where the customer should be inserted.
+// Preconditions: customer ID, number of collisions.
+// Postconditions: index of possible spot.
+// ---------------------------------------------------------------------------
 int CustomerAccounts::findInsertionPoint(int customerID, int collisions) {
-    int hashKey = customerID % arraySize;
-    hashKey += collisions*collisions;
-    hashKey = hashKey % arraySize;
+    int hashKey = customerID % arraySize;   //hash function: ID mod arraySize (for simplicity)
+    hashKey += collisions*collisions;       //quad probing: if there were collisions, sqaure it and
+                                            //              to hash key
+    hashKey = hashKey % arraySize;          //make sure to mod the final answer. return this.
     return hashKey;
 }
 
+// ----------------------------- removeAccount() ------------------------
+// Description: remove the account of a customer.
+// Preconditions: customer ID.
+// Postconditions: return 0 if successful. otherwise, return -1.
+// ---------------------------------------------------------------------------
 int CustomerAccounts::removeAccount(int customerID) {
 
     try {
 
         //figure out if the element is even in the array
-        int index = findIndexOfAccount(customerID);
-        if (index == -1) {
-            throw "customer account not in table.";
+        int index = findIndexOfAccount(customerID);         //find index of the customer's account with function
+        if (index == -1) {                                  //if function returned -1, that is error code.
+            throw "customer account not in table.";         //throw exception.
         }
         else {
-            hashTable[index].changeState(State::DELETED);
-            customerCount--;
+            hashTable[index].changeState(State::DELETED);   //otherwise change the state to deleted. no need to reset info
+            customerCount--;                                //decrease customer count
         }
         
-        //if too much space, resize hashtable
-        double newLoadFactor = static_cast<double>(customerCount) / arraySize;     //calculate load factor if new item were added
-        if (newLoadFactor <= 0.125) {     //if we have reached 50% capacity, increase array size
+        //if too much space now, resize hashtable
+        double newLoadFactor = static_cast<double>(customerCount) / arraySize;  //calculate load factor if new item were added
+        if (newLoadFactor <= 0.125) {     //if we are down to 12.5% capacity, decrease array size with method
             shrinkArray();
         }
 
@@ -183,12 +210,17 @@ int CustomerAccounts::removeAccount(int customerID) {
     return 0;
 }
 
+// ----------------------------- findIndexOfAccount() ------------------------
+// Description: finds index of customer in hash table, give their ID.
+// Preconditions: customer ID.
+// Postconditions: index of the customer's spot in the hash table, or -1 as error code.
+// ---------------------------------------------------------------------------
 int CustomerAccounts::findIndexOfAccount(int customerID) {
 
     bool found = false;                 //bool variable to check whether the element has been found or not
     int collisions = 0;                 //keep track of how many collisions are happening
 
-    //while the element has not been inserted...
+    //while the element has not been found...
     while (found == false) {
         
         int hashKey = findInsertionPoint(customerID, collisions);       //find hash key depending on number of collisions
@@ -200,19 +232,27 @@ int CustomerAccounts::findIndexOfAccount(int customerID) {
                 return hashKey;
             }
         }
+        //otherwise, if it's empty, then return error code
         else if (hashTable[hashKey].getState() == State::EMPTY) {
             return -1;
         }
 
+        //otherwise, it's a collision. increase collision count.
         collisions++;
     
     }
 
-    return 0;
+    return -1;
 }
 
+// ----------------------------- shrinkArray() ------------------------
+// Description: decreases hash table size and rehashes values.
+// Preconditions: none.
+// Postconditions: returns 0 if successful, and -1 if error.
+// ---------------------------------------------------------------------------
 int CustomerAccounts::shrinkArray() {
     
+    //if we already have the smallest possible size selected, then stick to it. return.
     if (arraySizeIndex == 0) {
         return 0;
     }
@@ -238,15 +278,26 @@ int CustomerAccounts::shrinkArray() {
 
 }
 
+// ----------------------------- containsAccount() ------------------------
+// Description: returns whether an account is in the hashtable or not.
+// Preconditions: customer ID.
+// Postconditions: boolean value.
+// ---------------------------------------------------------------------------
 bool CustomerAccounts::containsAccount(int customerID) {
-    if (findIndexOfAccount(customerID) != -1) {             //method returns -1 if ID is not in the hash table
-        return true;
+    if (findIndexOfAccount(customerID) != -1) {             //if the index of the account is not -1 (error code)
+        return true;                                        //then return true. it is in the hash table
     }
-    return false;
+    return false;                                           //otherwise it is not.
 }
 
+// ----------------------------- print() ------------------------
+// Description: prints the hash table, including empty slots.
+// Preconditions: none.
+// Postconditions: doesn't make any changes to values.
+// ---------------------------------------------------------------------------
 void CustomerAccounts::print() {
 
+    //loops through the array and calls the customer list's print method.
     for (int i = 0; i < arraySize; i++) {
         cout << "Index " << i << ": ";
         hashTable[i].print();

@@ -1,4 +1,15 @@
+// --------------------------------- CustomerAccounts.cpp -----------------------------------
+// Isha Rajpure CSS343
+// Creation Date: May 28, 2026
+// Date of Last Modification: June 2, 2026
+// -------------------------------------------------------------------------------
+// Purpose: Implementation file for Customer List class - specialized linked list that  
+// stores a customer's information and transaction history. implements
+// -------------------------------------------------------------------------------
+// Notes:
+// 
 //
+// -------------------------------------------------------------------------------
 
 #include "CustomerList.h"
 #include <iostream>
