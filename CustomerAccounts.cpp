@@ -1,8 +1,38 @@
+// --------------------------------- CustomerAccounts.cpp -----------------------------------
+// Isha Rajpure CSS343
+// Creation Date: May 30, 2026
+// Date of Last Modification: June 2, 2026
+// -------------------------------------------------------------------------------
+// Purpose: Implementation file for Customer Accounts class - hash table that stores customer 
+// information and transaction history.  implements addition, deletion, and search of accounts,
+// as well as addition and search of customer transactions.
+// -------------------------------------------------------------------------------
+// Notes:
+// 
+// - Difference between "addAccount" and "insert":
 //
+//      "addAccount" is the full method for adding a customer to the hash table given the
+// their details. it double checks the load factor (and decides if the hash table needs to be
+// resized or no space available), and then inserts the customer.
+//
+//      "insert" is the helper method that takes a customer's details, creates the customer object
+// (called CustomerList), and then inserts it into the table. also checks whether ID is already
+// linked with an account in the table.
+//
+// - If the max number of accounts that can fit in the hashtable are created, then no new accounts
+// can be inserted (wil throw error).
+//
+// -------------------------------------------------------------------------------
 
 #include "CustomerAccounts.h"
 #include "CustomerList.h"
 
+// ----------------------------- CustomerAccounts() -----------------------------------------
+// Description: Default constructor. Initializes all data members to defaults.
+// Preconditions: None.
+// Postconditions: arraySize = possibleArraySizes[0], arraySizeIndex = 0, hashTable = new CustomerList[arraySize],
+// customerCount = 0.
+// -------------------------------------------------------------------------------
 CustomerAccounts::CustomerAccounts() {
     arraySize = possibleArraySizes[0];
     arraySizeIndex = 0;
@@ -10,9 +40,15 @@ CustomerAccounts::CustomerAccounts() {
     customerCount = 0;
 }
 
+// ----------------------------- ~CustomerAccounts() ----------------------------------------
+// Description: Destructor. Array is deleted. Destructor for objects inside will be implicitly called
+// Preconditions: None.
+// Postconditions: CustomerAccounts (hashtable) object destroyed.
+// -------------------------------------------------------------------------------
 CustomerAccounts::~CustomerAccounts() {
     delete[] hashTable;
 }
+
 
 int CustomerAccounts::addAccount(int customerID, string firstName, string lastName) {
     

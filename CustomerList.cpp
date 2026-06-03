@@ -83,26 +83,47 @@ bool CustomerList::BorrowedMovie(string movieType, string director, string title
     return false;
 }
 
-//GET CUSTOMER ID
+// ----------------------------- getCustomerID() --------------------------------------
+// Description: Returns customer's ID.
+// Preconditions: None.
+// Postconditions: Returns customer's ID. CustomerList unchanged.
+// -------------------------------------------------------------------------------
 int CustomerList::getCustomerID() {
     return customerID;
 }
 
-//GET STATE
+// ----------------------------- getState() --------------------------------------
+// Description: Returns customer's ID.
+// Preconditions: None.
+// Postconditions: Returns customer's ID. CustomerList unchanged.
+// -------------------------------------------------------------------------------
 State CustomerList::getState() {
     return slot;
 }
 
-//GET FIRST NAME
+// ----------------------------- getFirstName() --------------------------------------
+// Description: Returns customer's ID.
+// Preconditions: None.
+// Postconditions: Returns customer's ID. CustomerList unchanged.
+// -------------------------------------------------------------------------------
 string CustomerList::getFirstName() {
     return firstName;
 }
 
-//GET LAST NAME
+// ----------------------------- getLastName() --------------------------------------
+// Description: Returns customer's ID.
+// Preconditions: None.
+// Postconditions: Returns customer's ID. CustomerList unchanged.
+// -------------------------------------------------------------------------------
 string CustomerList::getLastName() {
     return lastName;
 }
 
+// ----------------------------- changeState() --------------------------------------
+// Description: Returns customer's ID.
+// Preconditions: State.
+// Postconditions: State of the CustomerList is changed.
+// -------------------------------------------------------------------------------
 void CustomerList::changeState(State newState) {
     slot = newState;
 }

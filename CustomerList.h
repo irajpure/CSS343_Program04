@@ -1,4 +1,14 @@
-//
+// --------------------------------- CustomerList.h -------------------------------------
+// Isha Rajpure CSS343
+// Creation Date: May 28, 2026
+// Date of Last Modification: June 2, 2026
+// -------------------------------------------------------------------------------
+// Purpose: Header file for Customer List class - specialized linked list that stores 
+// a customer's information and transaction history.
+// -------------------------------------------------------------------------------
+// Notes: 
+//        transaction history is saved from most recent to oldest.
+// -------------------------------------------------------------------------------
 
 #ifndef CUSTOMERLIST_H
 #define CUSTOMERLIST_H
@@ -17,7 +27,7 @@ enum class State {
 //NODE IMPLEMENTATION - Trans Entry
 struct TransEntry {
 
-    TransEntry();
+    TransEntry();       //default node constructor
     TransEntry(string transType, string movieType, string director, string title, int year, TransEntry* nextEntry);
 
     string transType;           //character for type of transaction
