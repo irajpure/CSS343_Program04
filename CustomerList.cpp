@@ -16,6 +16,21 @@
 using namespace std;
 
 // ----------------------------- TransEntry() ------------------------------
+// Description: Default constructor for node, TransEntry.
+// Preconditions: none.
+// Postconditions: defaults conditions for variables saved.
+// -------------------------------------------------------------------------------
+TransEntry::TransEntry() {
+    transType = "";
+    movieType = "";
+    director = "";
+    title = "";
+    year = 0;
+    nextEntry = nullptr;
+
+}
+
+// ----------------------------- TransEntry(transaction data) ------------------------------
 // Description: Constructor for node, TransEntry.
 // Preconditions: data for a node (transaction information).
 // Postconditions: save the transaction information into variables
@@ -122,7 +137,7 @@ bool CustomerList::borrowedMovie(string movieType, string director, string title
         }
         
         //move on to next entry
-        mostRecentEntry = mostRecentEntry->nextEntry;
+        current = current->nextEntry;
     }
     
     //otherwise return false
