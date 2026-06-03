@@ -6,7 +6,7 @@
 // Purpose: Implementation file for Customer List class - specialized linked list that  
 // stores a customer's information and transaction history. implements
 // -------------------------------------------------------------------------------
-// Notes:
+// Notes: TransEntry is the node class for this linked list implementation
 // 
 //
 // -------------------------------------------------------------------------------
@@ -15,7 +15,11 @@
 #include <iostream>
 using namespace std;
 
-//NODE CONSTRUCTOR
+// ----------------------------- TransEntry() ------------------------------
+// Description: Constructor for node, TransEntry.
+// Preconditions: data for a node (transaction information).
+// Postconditions: save the transaction information into variables
+// -------------------------------------------------------------------------------
 TransEntry::TransEntry(string transType, string movieType, string director, string title, int year, TransEntry* nextEntry) {
     this->transType = transType;
     this->movieType = movieType;
@@ -26,22 +30,38 @@ TransEntry::TransEntry(string transType, string movieType, string director, stri
 }
 
 
-//DEFAULT CONSTRUCTOR
+// ----------------------------- CustomerList() ----------------------------------
+// Description: Constructor for linked list, Customer List. Initializes all data members to default.
+// Preconditions: none.
+// Postconditions: slot = EMPTY, mostRecentEntry (node head) = nullptr.
+// -------------------------------------------------------------------------------
 CustomerList::CustomerList() {
     slot = State::EMPTY;                //set to empty bc hasn't been initialized properly
     mostRecentEntry = nullptr;          //nothing in transaction history bc we just created the account
 }
 
-//CONSTRUCTOR
+// ----------------------------- CustomerList(data) ------------------------------
+// Description: Constructor for linked list, Customer List. creates customer list 
+//              with customer data.
+// Preconditions: customer ID, first name, last name.
+// Postconditions: saves data in appropriate values. slot = OCCUPIED, mostRecentEntry 
+//                 (node head) = nullptr.
+// -------------------------------------------------------------------------------
 CustomerList::CustomerList(int customerID, string firstName, string lastName) {
     this->customerID = customerID;
-    this->slot = State::OCCUPIED;
+    this->slot = State::OCCUPIED;       //since we are adding customer data, this linked list is being used
+                                        //so state should be occupied
     this->firstName = firstName;
     this->lastName = lastName;
     mostRecentEntry = nullptr;          //nothing in transaction history bc we just created the account
     //cout << "Construct: " << this << endl;
 }
 
+// ----------------------------- operator=() ------------------------------
+// Description: set current customer equal to the other customer
+// Preconditions: CustomerList& other (other customer list)
+// Postconditions: saves data in appropriate values. slot = OCCUPIED.
+// -------------------------------------------------------------------------------
 CustomerList& CustomerList::operator=(const CustomerList& other) {
     this->customerID = other.customerID;
     this->slot = State::OCCUPIED;
@@ -52,18 +72,29 @@ CustomerList& CustomerList::operator=(const CustomerList& other) {
     return *this;
 }
 
-//DESTRUCTOR 
+// ----------------------------- ~CustomerList() -----------------------------
+// Description: Destructor. Array is deleted. Destructor for objects inside will be implicitly called
+// Preconditions: None.
+// Postconditions: CustomerAccounts (hashtable) object destroyed.
+// -------------------------------------------------------------------------------
 CustomerList::~CustomerList() {
-    TransEntry* current = mostRecentEntry;
-    while (current != nullptr) {
-        TransEntry* saved = current;
-        current = current->nextEntry;
-        delete saved;
+    
+    TransEntry* current = mostRecentEntry;      //set current to be the head node of the list
+
+    while (current != nullptr) {                //until we reach the end of the list...
+        TransEntry* saved = current;            //save the current value in a temp variable pointer (node)
+        current = current->nextEntry;           //current is moved forward
+        delete saved;                           //temp node is deleted
     }
     //cout << "Destroy: " << this << endl;
 }
 
-//ADD TRANSACTION ENTRY - adds a transaction as the most recent event
+// ----------------------------- addTransEntry(transaction data) -----------------
+// Description: adds transaction to customer's history
+// Preconditions: transaction data
+// Postconditions: saves data in appropriate values, as a node.
+//                 node is added to the front of the linked list (most recent trans)
+// -------------------------------------------------------------------------------
 void CustomerList::addTransEntry(string transType, string movieType, string director, string title, int year) {
     //adds the mostRecentEntry to be after new entry, in the list.
     TransEntry* transaction = new TransEntry(transType, movieType, director, title, year, mostRecentEntry);
@@ -71,7 +102,11 @@ void CustomerList::addTransEntry(string transType, string movieType, string dire
     mostRecentEntry = transaction;
 }
 
-//BORROWED MOVIE - checks whether the customer borrowed a specific movie
+// ----------------------------- addTransEntry(transaction data) -----------------
+// Description: checks whether the customer borrowed a specific movie
+// Preconditions: transaction data, minus transaction type (given that it's Borrowed)
+// Postconditions: returns bool value
+// -------------------------------------------------------------------------------
 bool CustomerList::BorrowedMovie(string movieType, string director, string title, int year) {
     
     TransEntry* current = mostRecentEntry;
@@ -104,42 +139,47 @@ int CustomerList::getCustomerID() {
 }
 
 // ----------------------------- getState() --------------------------------------
-// Description: Returns customer's ID.
+// Description: Returns state of linked list
 // Preconditions: None.
-// Postconditions: Returns customer's ID. CustomerList unchanged.
+// Postconditions: Returns linked list state (whether it stores a customer or is just null). 
+//                 CustomerList unchanged.
 // -------------------------------------------------------------------------------
 State CustomerList::getState() {
     return slot;
 }
 
 // ----------------------------- getFirstName() --------------------------------------
-// Description: Returns customer's ID.
+// Description: Returns customer's first name.
 // Preconditions: None.
-// Postconditions: Returns customer's ID. CustomerList unchanged.
+// Postconditions: Returns customer's first name. CustomerList unchanged.
 // -------------------------------------------------------------------------------
 string CustomerList::getFirstName() {
     return firstName;
 }
 
 // ----------------------------- getLastName() --------------------------------------
-// Description: Returns customer's ID.
+// Description: Returns customer's last name.
 // Preconditions: None.
-// Postconditions: Returns customer's ID. CustomerList unchanged.
+// Postconditions: Returns customer's last name. CustomerList unchanged.
 // -------------------------------------------------------------------------------
 string CustomerList::getLastName() {
     return lastName;
 }
 
-// ----------------------------- changeState() --------------------------------------
-// Description: Returns customer's ID.
-// Preconditions: State.
+// ----------------------------- changeState() -----------------------------------
+// Description: changes linked list state.
+// Preconditions: State newState.
 // Postconditions: State of the CustomerList is changed.
 // -------------------------------------------------------------------------------
 void CustomerList::changeState(State newState) {
     slot = newState;
 }
 
-//FUNCTION TO SEE CUSTOMER INFORMATION. WILL LATER BE FOUND WITH HISTORY TRANSACTION.
+// ----------------------------- print() -----------------------------------------
+// Description: prints linked list. customer info & trans entries in order (recent to oldest)
+// Preconditions: none.
+// Postconditions: nothing is changed.
+// -------------------------------------------------------------------------------
 void CustomerList::print() {
     if (slot == State::OCCUPIED) {
         cout << "Customer: " << firstName << " " << lastName << ", ";
