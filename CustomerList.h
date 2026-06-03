@@ -47,7 +47,7 @@ class CustomerList {
         CustomerList(int customerID, string firstName, string lastName);                    //constructor
         ~CustomerList();                                                                    //destructor
         void addTransEntry(string transType, string movieType, string director, string title, int year);    //add a transaction to history
-        bool BorrowedMovie(string movieType, string director, string title, int year);      //check if customer has borrowed a movie
+        bool borrowedMovie(string movieType, string director, string title, int year);      //check if customer has borrowed a movie
         void print();                                                                       //print customer information
         int getCustomerID();                                                                //return ID
         string getFirstName();                                                              //return first name

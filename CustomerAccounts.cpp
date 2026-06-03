@@ -290,6 +290,39 @@ bool CustomerAccounts::containsAccount(int customerID) {
     return false;                                           //otherwise it is not.
 }
 
+// ----------------------------- addTransForCustomer() ------------------------
+// Description: adds a transaction entry to a customer's history.
+// Preconditions: customer ID and transaction entry data.
+// Postconditions: returns 0 if successful and -1 if not.
+//                 inserts trans entry in correct customer list.
+// ---------------------------------------------------------------------------
+int CustomerAccounts::addTransForCustomer(int customerID, string transType, string movieType, string director, string title, int year) {
+    
+    if (containsAccount(customerID)) {                                                  //if customer account exists...
+        int index = findIndexOfAccount(customerID);                                     //save index of customer from hash table
+        hashTable[index].addTransEntry(transType, movieType, director, title, year);    //insert transaction entry
+        return 0;
+    }
+    return -1;                                                                          //otherwise, return error code
+}
+
+// ----------------------------- checkBorrowedMovie() ------------------------
+// Description: checks whether customer has borrowed a movie or not.
+// Preconditions: customer ID and transaction entry data.
+// Postconditions: returns 0 if successful and -1 if not.
+//                 inserts trans entry in correct customer list.
+// ----------------------------------------------------------------------------
+bool CustomerAccounts::checkBorrowedMovie(int customerID, string movieType, string director, string title, int year) {
+
+    if (containsAccount(customerID)) {                                              //if customer account exists...
+        int index = findIndexOfAccount(customerID);                                 //save index of customer from hash table
+        return hashTable[index].borrowedMovie(movieType, director, title, year);    //return whether they borrowed movie
+    }
+
+    return false;                                                                   //if customer account doesn't exit, return false
+
+}
+
 // ----------------------------- print() ------------------------
 // Description: prints the hash table, including empty slots.
 // Preconditions: none.

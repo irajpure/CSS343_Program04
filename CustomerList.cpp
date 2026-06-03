@@ -102,12 +102,12 @@ void CustomerList::addTransEntry(string transType, string movieType, string dire
     mostRecentEntry = transaction;
 }
 
-// ----------------------------- addTransEntry(transaction data) -----------------
+// ----------------------------- borrowedMovie(transaction data) -----------------
 // Description: checks whether the customer borrowed a specific movie
 // Preconditions: transaction data, minus transaction type (given that it's Borrowed)
 // Postconditions: returns bool value
 // -------------------------------------------------------------------------------
-bool CustomerList::BorrowedMovie(string movieType, string director, string title, int year) {
+bool CustomerList::borrowedMovie(string movieType, string director, string title, int year) {
     
     TransEntry* current = mostRecentEntry;
     while (current != nullptr) {

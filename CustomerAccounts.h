@@ -26,6 +26,13 @@ class CustomerAccounts {
         int addAccount(int customerID, string firstName, string lastName);  //add customer account to table (after considering load factor)
         int removeAccount(int customerID);                                  //remove an account from the table
         bool containsAccount(int customerID);                               //search whether an account is stored in the table
+        
+        //insert a transaction entry for a customer
+        int addTransForCustomer(int customerID, string transType, string movieType, string director, string title, int year);
+        //check if a customer borrowed a movie
+        bool checkBorrowedMovie(int customerID, string movieType, string director, string title, int year);
+
+
         void print();                                                       //print hash table (including empty slots)
 
 
