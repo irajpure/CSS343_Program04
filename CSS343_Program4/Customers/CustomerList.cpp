@@ -44,6 +44,26 @@ TransEntry::TransEntry(string transType, string movieType, string director, stri
     this->nextEntry = nextEntry;
 }
 
+// ----------------------------- print() ------------------------------
+// Description: print method for node, TransEntry.
+// Preconditions: none.
+// Postconditions: print the transaction stored in the node.
+// -------------------------------------------------------------------------------
+void TransEntry::print() {
+    
+    string transactionWord;
+
+    if (transType == "B") {
+        transactionWord = "Borrowed";
+    }
+    else {
+        transactionWord = "Returned ";
+    }
+
+    cout << transactionWord << ": " << title << ", " << " by " << director << ". " << year << " (" << movieType << ")" << endl;
+    return;
+}
+
 
 // ----------------------------- CustomerList() ----------------------------------
 // Description: Constructor for linked list, Customer List. Initializes all data members to default.
@@ -199,6 +219,13 @@ void CustomerList::print() {
     if (slot == State::OCCUPIED) {
         cout << "Customer: " << firstName << " " << lastName << ", ";
         cout << "ID - " << customerID << endl;
+
+        TransEntry* current = mostRecentEntry;
+        while (current != nullptr) {
+            current->print();
+            current = current->nextEntry;
+        }
+
     }
     else {
         cout << "empty" << endl;

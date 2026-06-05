@@ -29,6 +29,7 @@ struct TransEntry {
     TransEntry();       //default node constructor
     //other constructor: providing data for transaction
     TransEntry(string transType, string movieType, string director, string title, int year, TransEntry* nextEntry);
+    void print();            //print command for transaction
 
     string transType;           //character for type of transaction
     string movieType;           //character for type of movie
