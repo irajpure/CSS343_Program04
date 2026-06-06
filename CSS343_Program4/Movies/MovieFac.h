@@ -22,7 +22,7 @@
 
 class MovieFac {
 public:
-    Movie* createMovie(char genre, ifstream& infile) {
+    Movie* createMovie(char genre, vector<string> tokens) {
         Movie* m = nullptr;
         if (genre == 'F') {
             m = new Comedy();
@@ -32,13 +32,13 @@ public:
             m = new Classic();
         } else {
             // invalid genre code, skip rest of the line
-            string dummy;
-            getline(infile, dummy);
             cout << "ERROR: Invalid genre code '" << genre
                 << "' — skipping entry." << endl;
             return nullptr;
         }
-        m->setData(infile);
+        if (m != nullptr) {
+            m->setData(tokens);
+        }
         return m;
 
     }

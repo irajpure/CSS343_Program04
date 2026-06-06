@@ -13,6 +13,8 @@
 //        Same title with different actor = different Classic object, different node.
 // -------------------------------------------------------------------------------
 #include "classic.h"
+#include <sstream>
+#include <string>
 
 // ----------------------------- Classic() ---------------------------------------
 // Description: Default constructor. Sets genre to 'C', initializes month/year to 0.
@@ -37,19 +39,23 @@ Classic::~Classic() {}
 // Postconditions: stock, director, title, actor, releaseMonth, releaseYear
 //                 filled from file. year set to releaseYear. infile advanced.
 // -------------------------------------------------------------------------------
-void Classic::setData(ifstream& infile) {
-    char comma;
-    string actorFirst, actorLast;
-    infile >> stock;                                // read stock
-    infile >> comma;                                // skip comma
-    getline(infile, director, ',');    // read director until comma
-    director = director.substr(1);             // remove leading space
-    getline(infile, title, ',');       // read title until comma
-    title = title.substr(1);                   // remove leading space
-    infile >> actorFirst >> actorLast;             // read actor first and last name
-    actor = actorFirst + " " + actorLast;          // store as full name
-    infile >> releaseMonth >> releaseYear;         // read release month and year
-    year = releaseYear;                            // keep year in base class for consistency
+void Classic::setData(vector<string> tokens) {
+    
+    stock = stoi(tokens[0]);      //extract stock
+    director = tokens[1];         //extract director
+    title = tokens[2];            //extract title
+
+    //last string in the vector will contain the actor name, month, and year.
+    string line = tokens[3];
+    istringstream iss(line);      //separate line by spaces
+    string actorFirst, actorLast, monthString, yearString;
+    iss >> actorFirst >> actorLast >> monthString >> yearString;    //save into variables
+
+    //adjust type of variable and save info
+    actor = actorFirst + " " + actorLast;
+    releaseMonth = stoi(monthString);
+    releaseYear = stoi(yearString);
+
 }
 
 // ----------------------------- operator< ---------------------------------------

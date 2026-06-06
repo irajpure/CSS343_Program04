@@ -10,8 +10,8 @@ using namespace std;
 int main() {
 
     cout<<"\n----------- Online Movie Rental Store -----------"<<endl;
-	ifstream infile("Data/data4customers.txt");
-	if (!infile) {
+	ifstream customerFile("Data/data4customers.txt");
+	if (!customerFile) {
 		cout << "File could not be opened." << endl;
 		return 1;
 	}
@@ -20,12 +20,26 @@ int main() {
 
     Business MovieRentalStore;
 
-    if (MovieRentalStore.processCustomerData(infile) <0) {
+    if (MovieRentalStore.processCustomerData(customerFile) <0) {
         return 1;
     };
     cout << "Customers:" << endl;
-    MovieRentalStore.printCustomers();
+    MovieRentalStore.displayCustomers();
 
+    cout << endl;
+
+    ifstream moviesFile("Data/data4movies.txt");
+	if (!moviesFile) {
+		cout << "File could not be opened." << endl;
+		return 1;
+	}
+
+    
+    if (MovieRentalStore.processMoviesData(moviesFile) <0) {
+        return 1;
+    };
+    MovieRentalStore.displayAllMovies();
+    
 
     return 0;
 }

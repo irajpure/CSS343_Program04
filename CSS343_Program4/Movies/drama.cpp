@@ -33,15 +33,11 @@ Drama::~Drama() {}
 //                Format: D, Stock, Director, Title, Year
 // Postconditions: stock, director, title, year filled from file. infile advanced.
 // -------------------------------------------------------------------------------
-void Drama::setData(ifstream& infile) {
-    char comma;
-    infile >> stock;                        // read stock
-    infile >> comma;                        // skip comma
-    getline(infile, director, ',');      // read director until comma
-    director = director.substr(1);              // remove leading space
-    getline(infile, title, ',');       // read title until comma
-    title = title.substr(1);            // remove leading space
-    infile >> year;                         // read year
+void Drama::setData(vector<string> tokens) {
+    stock = stoi(tokens[0]);      //extract stock
+    director = tokens[1];         //extract director
+    title = tokens[2];            //extract title
+    year = stoi(tokens[3]);       //extract year
 }
 
 // ----------------------------- operator< ---------------------------------------

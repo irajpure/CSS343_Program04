@@ -14,7 +14,10 @@ class Business {
 
     public:
         int processCustomerData(ifstream& file);
-        void printCustomers();
+        void displayCustomers();
+
+        int processMoviesData(ifstream& file);
+        void displayAllMovies();
 
 
     private:
