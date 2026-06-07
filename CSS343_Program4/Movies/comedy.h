@@ -13,6 +13,8 @@
 //        Two comedies are equal if they share the same title and year.
 // -------------------------------------------------------------------------------
 #include "Movie.h"
+#include <vector>
+#include <string>
 
 class Comedy : public Movie {
 public:

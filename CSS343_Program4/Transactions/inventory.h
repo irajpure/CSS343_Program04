@@ -16,6 +16,8 @@
 // -------------------------------------------------------------------------------
 #include "Trans.h"
 #include "../Storage/MovieStorage.h"
+#include <vector>
+#include <string>
 
 class Inventory : public Trans {
 public:

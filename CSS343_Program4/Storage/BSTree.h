@@ -16,6 +16,8 @@
 //        All Movie objects owned by BSTree, deleted in destructor.
 // -------------------------------------------------------------------------------
 #include "../Movies/Movie.h"
+#include <vector>
+#include <string>
 
 // -----------------------------------------------------------------------
 // NodeData: wrapper node holding Movie pointer and left/right child links

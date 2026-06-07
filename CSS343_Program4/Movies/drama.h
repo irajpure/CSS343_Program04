@@ -14,6 +14,8 @@
 //        Command file identifies dramas by director and title (no year needed).
 // -------------------------------------------------------------------------------
 #include "Movie.h"
+#include <vector>
+#include <string>
 
 class Drama : public Movie {
 public:

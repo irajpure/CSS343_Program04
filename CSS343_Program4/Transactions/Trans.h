@@ -20,6 +20,8 @@
 #include "../Customers/CustomerAccounts.h"
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <string>
 using namespace std;
 
 class Trans {

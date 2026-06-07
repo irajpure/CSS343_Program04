@@ -16,6 +16,8 @@
 //        releaseYear is also stored in base class year for consistency.
 // -------------------------------------------------------------------------------
 #include "Movie.h"
+#include <vector>
+#include <string>
 
 class Classic : public Movie {
 public:

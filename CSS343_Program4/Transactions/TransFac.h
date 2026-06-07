@@ -20,6 +20,8 @@
 #include "borrow.h"
 #include "inventory.h"
 #include "history.h"
+#include <vector>
+#include <string>
 
 class TransFac {
 public:

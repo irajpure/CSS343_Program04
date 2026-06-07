@@ -16,6 +16,8 @@
 //        display() is not used since History itself is not logged to history.
 // -------------------------------------------------------------------------------
 #include "Trans.h"
+#include <vector>
+#include <string>
 
 class History : public Trans {
 public:

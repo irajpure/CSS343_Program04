@@ -19,6 +19,8 @@
 #include "drama.h"
 #include "classic.h"
 #include <fstream>
+#include <vector>
+#include <string>
 
 class MovieFac {
 public:

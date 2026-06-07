@@ -18,6 +18,7 @@
 // -------------------------------------------------------------------------------
 #include "BSTree.h"
 #include "../Movies/classic.h"
+#include <string>
 
 class ClassicBSTree : public BSTree {
 public:

@@ -16,6 +16,8 @@
 // -------------------------------------------------------------------------------
 #include "Trans.h"
 #include "../Customers/CustomerAccounts.h"
+#include <vector>
+#include <string>
 
 class Borrow : public Trans {
 public:
