@@ -13,18 +13,19 @@ using namespace std;
 class Business {
 
     public:
-        int processCustomerData(ifstream& file);
-        void displayCustomers();
+        int processCustomerData(ifstream& file);    //process the customer txt file
+        void displayCustomers();                    //display only customers list
+        void displayCustomerTable();                //display hash table
 
-        int processMoviesData(ifstream& file);
+        int processMoviesData(ifstream& file);      //process the movies txt file
         void displayAllMovies();
 
-        int processTransactionData(ifstream& file);
+        int processTransactionData(ifstream& file); //process the transaction txt file
 
 
     private:
-        MovieStorage moviesCollection;
-        CustomerAccounts accounts;
+        MovieStorage moviesCollection;              //movies inventory all stored here
+        CustomerAccounts accounts;                  //customer accounts hash table 
 
 };
 

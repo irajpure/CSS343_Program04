@@ -31,6 +31,7 @@ public:
     virtual void doTrans(CustomerAccounts& customerAccounts) = 0;   // executes the transaction
     virtual void setData(vector<string> tokens) = 0; // reads remaining fields from command file
     virtual void display() const = 0;           // prints transaction info
+    void setMovie(Movie* other);
 
 protected:
     int customerID;     //ID for the customer performing the transaction

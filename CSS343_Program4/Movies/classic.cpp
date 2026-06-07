@@ -57,6 +57,12 @@ void Classic::setData(vector<string> tokens) {
     releaseYear = stoi(yearString);
 
 }
+void Classic::setTransactionData(vector<string> tokens) {
+    releaseMonth = stoi(tokens[0]);
+    releaseYear = stoi(tokens[1]);
+    actor = tokens[2];
+
+}
 
 // ----------------------------- operator< ---------------------------------------
 // Description: Compares two Classic movies for BSTree ordering.

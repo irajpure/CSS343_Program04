@@ -28,6 +28,7 @@ public:
     virtual bool operator <(const Movie& other) const = 0;  // for BSTree sorting
     virtual bool operator ==(const Movie& other) const = 0; //for movie lookup
     virtual void setData(vector<string> tokens) = 0;        // reads from vector
+    virtual void setTransactionData(vector<string> tokens) = 0; //for making movie from transaction data
     virtual void display() const = 0;                       // prints movie info 
 
     //getters used by borrow/return for stock management

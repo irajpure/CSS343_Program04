@@ -11,7 +11,7 @@
 #include <iostream>
 #include <sstream>
 
-
+//PROCESS CUSTOMER DATA
 int Business::processCustomerData(ifstream& file) {
 
     try {
@@ -46,6 +46,7 @@ int Business::processCustomerData(ifstream& file) {
 
 }
 
+//PROCESS MOVIE DATA
 int Business::processMoviesData(ifstream& file) {
     
     try {
@@ -89,6 +90,7 @@ int Business::processMoviesData(ifstream& file) {
     return 0;
 }
 
+//PROCESS TRANSACTION DATA
 int Business::processTransactionData(ifstream& file) {
     
     try {
@@ -102,7 +104,9 @@ int Business::processTransactionData(ifstream& file) {
             char code = line[0];
             TransFac transFactory;
             Trans* transaction = transFactory.createTrans(code);
-            vector<string> tokens; 
+            Movie* comparison;
+            vector<string> tokens;
+            vector<string> movieTokens; 
 
             if (code == 'H' || code == 'B' || code == 'R') {
                 //remove the transType character from the beginning
@@ -144,8 +148,9 @@ int Business::processTransactionData(ifstream& file) {
                 line = line.substr(2);
 
                 //extract movieType
-                //ex. F Pirates, 2003
-                //extracting F
+                //ex. C 9 1938 Katherine Hepburn
+                //ex. F Pirates of the Carribean, 2003
+                //extracting C or F
                 movieType += line[0];
                 tokens.push_back(movieType);
                 line = line.substr(2);
@@ -157,7 +162,7 @@ int Business::processTransactionData(ifstream& file) {
                 //get the release month
                 string releaseMonth;
                 releaseMonth += line[0];
-                tokens.push_back(releaseMonth);
+                movieTokens.push_back(releaseMonth);
                 line = line.substr(2);
 
                 //get the release year
@@ -166,16 +171,57 @@ int Business::processTransactionData(ifstream& file) {
                     releaseYear += line[0];
                     line = line.substr(1);
                 }
-                tokens.push_back(releaseYear);
+                movieTokens.push_back(releaseYear);
                 line = line.substr(1);
 
                 //remaining line is the major actor. add to vector as well
-                tokens.push_back(line);
+                movieTokens.push_back(line);
+
+            }
+            else if (movieType == "F") {
+                
+                //extract title
+                //ex. Pirates of the Carribean, 2003
+                string title;
+                while (line[0] != ',') {
+                    title += line[0];
+                    line = line.substr(1);
+                }
+                movieTokens.push_back(title);
+
+
+                //remove comma and space
+                //extract year
+                line = line.substr(2);
+                string year = line;
+                movieTokens.push_back(line);
 
             }
             else if (movieType == "D") {
                 
+                //extract director
+                //ex. Barry Levison, Good Morning Vietnam
+                string director;
+                while (line[0] != ',') {
+                    director += line[0];
+                    line = line.substr(1);
+                }
+                movieTokens.push_back(director);
+
+
+                //remove comma and space
+                //extract title
+                line = line.substr(2);
+                string year = line;
+                movieTokens.push_back(line);
+
             }
+
+            comparison->setTransactionData(movieTokens);
+            Movie* movieFromInventory = moviesCollection.retrieveMovie(movieType[0], *comparison);
+            transaction->setMovie(movieFromInventory);
+            transaction->doTrans(accounts);
+            transaction->display();
 
         }
 
@@ -192,6 +238,10 @@ int Business::processTransactionData(ifstream& file) {
 
 
 void Business::displayCustomers() {
+    accounts.printCustomers();
+}
+
+void Business::displayCustomerTable() {
     accounts.print();
 }
 

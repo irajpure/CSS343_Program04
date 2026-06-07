@@ -217,7 +217,7 @@ void CustomerList::changeState(State newState) {
 // -------------------------------------------------------------------------------
 void CustomerList::print() {
     if (slot == State::OCCUPIED) {
-        cout << "Customer: " << firstName << " " << lastName << ", ";
+        cout << firstName << " " << lastName << ", ";
         cout << "ID - " << customerID << endl;
 
         TransEntry* current = mostRecentEntry;

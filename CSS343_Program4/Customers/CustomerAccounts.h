@@ -34,6 +34,7 @@ class CustomerAccounts {
 
 
         void print();                                                       //print hash table (including empty slots)
+        void printCustomers();
 
 
     private:

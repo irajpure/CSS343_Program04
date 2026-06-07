@@ -40,6 +40,11 @@ void Comedy::setData(vector<string> tokens) {
     year = stoi(tokens[3]);       //extract year
 }
 
+void Comedy::setTransactionData(vector<string> tokens) {
+    title = tokens[0];
+    year = stoi(tokens[1]);
+}
+
 // ----------------------------- operator< ---------------------------------------
 // Description: Compares two Comedy movies for BSTree ordering.
 //              Sorts alphabetically by title first, then by year if titles match.

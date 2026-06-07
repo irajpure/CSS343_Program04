@@ -25,6 +25,7 @@ public:
     virtual bool operator <(const Movie& other) const;    // sorts by year, month, actor
     virtual bool operator ==(const Movie& other) const;   // equal if year, month, and actor match
     virtual void setData(vector<string> tokens);          // reads classic data from vector
+    virtual void setTransactionData(vector<string> tokens); //for making movie from transaction data
     virtual void display() const;                         // prints classic info
     
     // getters needed for Borrow/Return lookup and alternative suggestion

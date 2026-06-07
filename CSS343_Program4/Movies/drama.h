@@ -23,6 +23,7 @@ public:
     virtual bool operator <(const Movie& other) const;    // sorts by director then title
     virtual bool operator ==(const Movie& other) const;   // equal if title and year match
     virtual void setData(vector<string> tokens);          // reads drama data from vector
+    virtual void setTransactionData(vector<string> tokens); //for making movie from transaction data
     virtual void display() const;                         // prints drama info
     void setSearchData(string dir, string t) { director = dir; title = t; }
 };

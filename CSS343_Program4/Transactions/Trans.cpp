@@ -20,6 +20,10 @@
 // -------------------------------------------------------------------------------
 Trans::Trans() : customerID(0), movie(nullptr) {}
 
+void Trans::setMovie(Movie* other) {
+    movie = other;
+}
+
 // ----------------------------- ~Trans() ----------------------------------------
 // Description: Destructor. Does not delete movie pointer — Business owns
 //              the Movie objects and is responsible for their deletion.

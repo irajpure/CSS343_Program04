@@ -25,6 +25,7 @@ int main() {
     };
     cout << "Customers:" << endl;
     MovieRentalStore.displayCustomers();
+    MovieRentalStore.displayCustomerTable();
 
     cout << endl;
 
@@ -39,6 +40,20 @@ int main() {
         return 1;
     };
     MovieRentalStore.displayAllMovies();
+
+    cout << endl;
+
+    ifstream transactionFile("Data/simple_commands.txt");
+	if (!transactionFile) {
+		cout << "File could not be opened." << endl;
+		return 1;
+	}
+
+    /*
+    if (MovieRentalStore.processTransactionData(transactionFile) <0) {
+        return 1;
+    };
+    */
     
 
     return 0;

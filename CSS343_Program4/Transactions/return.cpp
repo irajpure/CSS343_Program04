@@ -65,10 +65,10 @@ void Return::doTrans(CustomerAccounts& customerAccounts) {
 //                Format: R customerID mediaType movieType movieIDfields
 // Postconditions: customerID, mediaType, movieType filled. infile advanced.
 // -------------------------------------------------------------------------------
-void Return::setData(ifstream& infile) {
-    infile >> customerID;   // read customer ID
-    infile >> mediaType;    // read media type ('D' for DVD)
-    infile >> movieType;    // read movie genre code ('F', 'D', 'C')
+void Return::setData(vector<string> tokens) {
+    customerID = stoi(tokens[0]);   // read customer ID
+    mediaType = tokens[1];    // read media type ('D' for DVD)
+    movieType = tokens[2][0];    // read movie genre code ('F', 'D', 'C')
 }
 
 // ----------------------------- display() ---------------------------------------

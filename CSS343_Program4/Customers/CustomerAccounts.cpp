@@ -338,3 +338,14 @@ void CustomerAccounts::print() {
     cout << endl;
 
 }
+
+//Print command for just the table
+void CustomerAccounts::printCustomers() {
+    //loops through the array and calls the customer list's print method.
+    for (int i = 0; i < arraySize; i++) {
+        if (hashTable[i].getState() == State::OCCUPIED) {
+            hashTable[i].print();
+        }
+    }
+    cout << endl;
+}

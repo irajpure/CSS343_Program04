@@ -40,6 +40,12 @@ void Drama::setData(vector<string> tokens) {
     year = stoi(tokens[3]);       //extract year
 }
 
+void Drama::setTransactionData(vector<string> tokens) {
+    director = tokens[0];
+    title = tokens[1];
+}
+
+
 // ----------------------------- operator< ---------------------------------------
 // Description: Compares two Drama movies for BSTree ordering.
 //              Sorts alphabetically by director first, then by title if same director.
