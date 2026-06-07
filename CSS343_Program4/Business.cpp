@@ -4,6 +4,7 @@
 #include "Storage/MovieStorage.h"
 #include "Movies/MovieFac.h"
 #include "Transactions/TransFac.h"
+#include "Transactions/inventory.h"
 
 #include <stdlib.h>
 #include <vector>
@@ -104,9 +105,16 @@ int Business::processTransactionData(ifstream& file) {
             char code = line[0];
             TransFac transFactory;
             Trans* transaction = transFactory.createTrans(code);
-            Movie* comparison;
+            Movie* comparison = nullptr; //EDITED
             vector<string> tokens;
             vector<string> movieTokens; 
+            //added thiis!
+            if (code == 'I') {
+                static_cast<Inventory*>(transaction)->setMovieStorage(&moviesCollection);
+                transaction->doTrans(accounts);
+                delete transaction;
+                continue;
+            }
 
             if (code == 'H' || code == 'B' || code == 'R') {
                 //remove the transType character from the beginning
@@ -116,6 +124,9 @@ int Business::processTransactionData(ifstream& file) {
                 if (code == 'H') {
                     tokens.push_back(line);
                     transaction->setData(tokens);
+                    transaction->doTrans(accounts); 
+                    delete transaction;            
+                    continue; 
                 }
             }
 
@@ -216,13 +227,29 @@ int Business::processTransactionData(ifstream& file) {
                 movieTokens.push_back(line);
 
             }
-
+            // create correct fake movie based on movieType
+            if (movieType == "F")      comparison = new Comedy();
+            else if (movieType == "D") comparison = new Drama();
+            else if (movieType == "C") comparison = new Classic();
+            else {
+                cout << "ERROR: Invalid movie type '" << movieType << "'" << endl;
+                delete transaction;
+                continue;
+            }
             comparison->setTransactionData(movieTokens);
             Movie* movieFromInventory = moviesCollection.retrieveMovie(movieType[0], *comparison);
+            delete comparison;          // clean up fake movie
+            comparison = nullptr;
+
+            if (movieFromInventory == nullptr) {
+                cout << "ERROR: Movie not found in inventory." << endl;
+                delete transaction;
+                continue;               // skip doTrans if movie not found
+            }
+            transaction->setData(tokens);
             transaction->setMovie(movieFromInventory);
             transaction->doTrans(accounts);
-            transaction->display();
-
+            delete transaction;
         }
 
 
