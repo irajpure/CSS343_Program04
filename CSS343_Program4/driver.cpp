@@ -51,11 +51,11 @@ int main() {
 		return 1;
 	}
 
-    /*
+    
     if (MovieRentalStore.processTransactionData(transactionFile) <0) {
         return 1;
     };
-    */
+    
     
 
     return 0;
