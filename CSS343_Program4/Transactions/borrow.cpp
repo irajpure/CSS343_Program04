@@ -69,10 +69,13 @@ void Borrow::doTrans(CustomerAccounts& customerAccounts) {
 //                Format: B customerID mediaType movieType movieIDfields
 // Postconditions: customerID, mediaType, movieType filled. infile advanced.
 // -------------------------------------------------------------------------------
-void Borrow::setData(ifstream& infile) {
-    infile >> customerID;       // read customer ID
-    infile >> mediaType;        // read media type (currently always 'D' for DVD)
-    infile >> movieType;        // read movie genre code ('F', 'D', 'C') 
+void Borrow::setData(vector<string> tokens) {
+    customerID = stoi(tokens[0]);       // read customer ID
+    mediaType = tokens[1];        // read media type (currently always 'D' for DVD)
+    movieType = tokens[2][0];        // read movie genre code ('F', 'D', 'C') 
+    if (movieType == 'C') {
+        //releaseMonth = stoi(tokens[3]);
+    }
 }
 
 // ----------------------------- display() ---------------------------------------

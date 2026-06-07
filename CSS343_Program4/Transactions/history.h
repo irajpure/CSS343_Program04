@@ -22,7 +22,7 @@ public:
     History();                                                 // constructor
     virtual ~History();                                        // destructor
     virtual void doTrans(CustomerAccounts& customerAccounts); // prints customer history
-    virtual void setData(ifstream& infile);                   // reads customerID from command file
+    virtual void setData(vector<string> tokens);                   // reads customerID from command file
     virtual void display() const;                             // not used for History
 };
 #endif

@@ -22,7 +22,7 @@ public:
     Borrow();                                                 // constructor
     virtual ~Borrow();                                        // destructor
     virtual void doTrans(CustomerAccounts& customerAccounts); // decrease stock, logs transaction
-    virtual void setData(ifstream& infile);                   // reads command fields from file
+    virtual void setData(vector<string> tokens);                   // reads command fields from file
     virtual void display() const;                             // prints borrow info
     char getMovieType() const { return movieType; }
     void setMovie(Movie* m) { movie = m; }

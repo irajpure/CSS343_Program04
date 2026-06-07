@@ -19,6 +19,8 @@ class Business {
         int processMoviesData(ifstream& file);
         void displayAllMovies();
 
+        int processTransactionData(ifstream& file);
+
 
     private:
         MovieStorage moviesCollection;

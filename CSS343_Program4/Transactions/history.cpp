@@ -51,8 +51,8 @@ void History::doTrans(CustomerAccounts& customerAccounts) {
 //                Format: H customerID
 // Postconditions: customerID filled. infile advanced.
 // -------------------------------------------------------------------------------
-void History::setData(ifstream& infile) {
-    infile >> customerID; // read customer ID — only field for H command
+void History::setData(vector<string> tokens) {
+    customerID = stoi(tokens[0]); // read customer ID — only field for H command
 }
 
 // ----------------------------- display() ---------------------------------------

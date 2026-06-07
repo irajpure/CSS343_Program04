@@ -56,6 +56,9 @@ void MovieStorage::insertMovie(char genre, Movie* movie) {
         return;
     }
     trees[genreIndex.at(genre)]->insert(movie);
+    if (genre == 'C') {
+        updateClassicMovieStock(movie->getTitle(), movie->getStock());
+    }
 }
 
 // ----------------------------- retrieveMovie() ---------------------------------
@@ -136,4 +139,47 @@ void MovieStorage::addGenre(char genre, BSTree* tree) {
     }
     genreIndex[genre] = trees.size();   // map genre to next available index
     trees.push_back(tree);              // add tree to vector
+}
+
+// ----------------------------- updateClassicMovieStock() -----------------------
+// Description: Updates the total stock of a classic movie.
+// Preconditions: string movieName, int additionalStock.
+// Postconditions: if the movie already exists in the map, adds to its stock,
+//                 but if not, creates a new pair and inserts it.
+// -------------------------------------------------------------------------------
+void MovieStorage::updateClassicMovieStock(string movieName, int additionalStock) {
+
+    if (classicMoviesTotalStock.find(movieName) != classicMoviesTotalStock.end()) { //if movie is already in the table
+        classicMoviesTotalStock[movieName] += additionalStock;                      //add to its stock
+    }
+    else {
+        classicMoviesTotalStock.insert({movieName, additionalStock});               //otherwise, insert new pair
+    }
+
+}
+
+// ----------------------------- borrowClassicMovie() -----------------------
+// Description: Updates the total stock of a classic movie after a movie is borrowed.
+// Preconditions: string movieName.
+// Postconditions: reduces stock of the movie by 1.
+// --------------------------------------------------------------------------
+void MovieStorage::borrowClassicMovie(string movieName) {
+
+    if (classicMoviesTotalStock.find(movieName) != classicMoviesTotalStock.end() && classicMoviesTotalStock[movieName] > 0) {
+        classicMoviesTotalStock[movieName]--;
+    }
+
+}
+
+// ----------------------------- returnClassicMovie() -----------------------
+// Description: Updates the total stock of a classic movie after a movie is returned.
+// Preconditions: string movieName.
+// Postconditions: increases stock of the movie by 1.
+// --------------------------------------------------------------------------
+void MovieStorage::returnClassicMovie(string movieName) {
+
+    if (classicMoviesTotalStock.find(movieName) != classicMoviesTotalStock.end()) {
+        classicMoviesTotalStock[movieName]++;
+    }
+
 }

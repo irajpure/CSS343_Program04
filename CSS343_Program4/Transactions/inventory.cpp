@@ -42,9 +42,8 @@ void Inventory::setMovieStorage(MovieStorage* storage) {
 // Preconditions: infile positioned after action code 'I'.
 // Postconditions: infile advanced past current line.
 // -------------------------------------------------------------------------------
-void Inventory::setData(ifstream& infile) {
-    string dummy;
-    getline(infile, dummy);     // no fields to read for I command
+void Inventory::setData(vector<string> tokens) {
+    return;         //nothing to set
 }
 
 // ----------------------------- doTrans() ---------------------------------------

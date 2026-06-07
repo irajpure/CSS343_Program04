@@ -3,6 +3,7 @@
 #include "Customers/CustomerList.h"
 #include "Storage/MovieStorage.h"
 #include "Movies/MovieFac.h"
+#include "Transactions/TransFac.h"
 
 #include <stdlib.h>
 #include <vector>
@@ -85,6 +86,106 @@ int Business::processMoviesData(ifstream& file) {
         return -1;
     }
 
+    return 0;
+}
+
+int Business::processTransactionData(ifstream& file) {
+    
+    try {
+
+        string line;
+        while (getline(file, line)) {
+
+            //extract transaction type & create transaction accordingly
+            //ex: B 1234 D F Pirates, 2003
+            //extracting the first character
+            char code = line[0];
+            TransFac transFactory;
+            Trans* transaction = transFactory.createTrans(code);
+            vector<string> tokens; 
+
+            if (code == 'H' || code == 'B' || code == 'R') {
+                //remove the transType character from the beginning
+                //ex: 1234 D F Pirates, 2003
+                line = line.substr(2);
+                //if history, then the rest is only the id. so we are good. to send in vector.
+                if (code == 'H') {
+                    tokens.push_back(line);
+                    transaction->setData(tokens);
+                }
+            }
+
+            string movieType;
+
+            if (code == 'B' || code == 'R') {
+                //extract the customer id, until you get to the space
+                //ex: B 1234 D F Pirates, 2003
+                //extracting 1234
+                string idString;
+                while (line[0] != ' ') {
+                    idString += line[0];
+                    line = line.substr(1);
+                }
+                tokens.push_back(idString);
+
+                //remove the extra space now
+                //ex: D F Pirates, 2003
+                line = line.substr(1);
+
+                //extract mediaType
+                //ex: D F Pirates, 2003
+                //extracting D
+                string mediaType;
+                mediaType += line[0];
+                tokens.push_back(mediaType);
+
+                //remove the mediaType character from the beginning
+                //ex: 1234 D F Pirates, 2003
+                line = line.substr(2);
+
+                //extract movieType
+                //ex. F Pirates, 2003
+                //extracting F
+                movieType += line[0];
+                tokens.push_back(movieType);
+                line = line.substr(2);
+            }
+
+            //if movie type is classic
+            if (movieType == "C") {
+                
+                //get the release month
+                string releaseMonth;
+                releaseMonth += line[0];
+                tokens.push_back(releaseMonth);
+                line = line.substr(2);
+
+                //get the release year
+                string releaseYear;
+                while (line[0] != ' ') {
+                    releaseYear += line[0];
+                    line = line.substr(1);
+                }
+                tokens.push_back(releaseYear);
+                line = line.substr(1);
+
+                //remaining line is the major actor. add to vector as well
+                tokens.push_back(line);
+
+            }
+            else if (movieType == "D") {
+                
+            }
+
+        }
+
+
+    }
+
+    catch(const char* msg) {
+
+    }
+    
     return 0;
 }
 

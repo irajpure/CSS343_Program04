@@ -46,8 +46,15 @@ public:
     // add a new genre BSTree — for future expansion (e.g. Adventure)
     void addGenre(char genre, BSTree* tree);
 
+    //add
+    void updateClassicMovieStock(string movieName, int additionalStock);
+    void borrowClassicMovie(string movieName);
+    void returnClassicMovie(string movieName);
+
 private:
-    vector<BSTree*> trees;          // stores all genre BSTrees
-    map<char, int> genreIndex;      // maps genre code to vector index
+    vector<BSTree*> trees;                                  // stores all genre BSTrees
+    map<char, int> genreIndex;                              // maps genre code to vector index
+
+     unordered_map<string, int> classicMoviesTotalStock;    //stores the total stock of classic movies
 };
 #endif

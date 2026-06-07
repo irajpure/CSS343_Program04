@@ -29,7 +29,7 @@ public:
 
     //pure virtual methods, all subclasses must implement these
     virtual void doTrans(CustomerAccounts& customerAccounts) = 0;   // executes the transaction
-    virtual void setData(ifstream& infile) = 0; // reads remaining fields from command file
+    virtual void setData(vector<string> tokens) = 0; // reads remaining fields from command file
     virtual void display() const = 0;           // prints transaction info
 
 protected:

@@ -23,7 +23,7 @@ public:
     virtual ~Inventory();   // destructor
 
     virtual void doTrans(CustomerAccounts& customerAccounts);    // prints full inventory
-    virtual void setData(ifstream& infile);                     // skips rest of line
+    virtual void setData(vector<string> tokens);                     // skips rest of line
     virtual void display() const;                              // intentionally empty
 
     // Business passes MovieStorage pointer before calling doTrans()
